@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.itcr.myapplication">
+    package="com.itcr.alradio">
 
     <application
         android:allowBackup="true"

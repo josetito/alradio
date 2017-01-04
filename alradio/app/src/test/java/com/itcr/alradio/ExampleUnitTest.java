@@ -1,4 +1,4 @@
-package com.itcr.myapplication;
+package com.itcr.alradio;
 
 import org.junit.Test;
 
