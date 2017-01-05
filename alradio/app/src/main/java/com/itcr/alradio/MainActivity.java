@@ -1,5 +1,8 @@
 package com.itcr.alradio;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,7 +91,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_reproductor) {
 
         } else if (id == R.id.nav_salir) {
-            finish();
+            //finish();
+            salir();
 
         } else if (id == R.id.nav_acerca_de) {
 
@@ -97,4 +102,23 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void salir(){
+        AlertDialog.Builder salirApp = new AlertDialog.Builder(this);
+        salirApp.setTitle("Salir");
+        salirApp.setMessage("¿Estás seguro que deseas salir?");
+        salirApp.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        salirApp.setNegativeButton("Cancelar", null);
+
+        Dialog ejePopUp = salirApp.create();
+        ejePopUp.show();
+    }
+
+
 }
