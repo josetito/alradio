@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -87,12 +88,14 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_inicio) {
             // Handle the camera action
         } else if (id == R.id.nav_mis_listas) {
+            popUpAgregarLista();
 
         } else if (id == R.id.nav_reproductor) {
+            popUpAgregarEmisora();
 
         } else if (id == R.id.nav_salir) {
             //finish();
-            salir();
+            popUpSalir();
 
         } else if (id == R.id.nav_acerca_de) {
 
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void salir(){
+    public void popUpSalir(){
         AlertDialog.Builder salirApp = new AlertDialog.Builder(this);
         salirApp.setTitle("Salir");
         salirApp.setMessage("¿Estás seguro que deseas salir?");
@@ -117,6 +120,48 @@ public class MainActivity extends AppCompatActivity
         salirApp.setNegativeButton("Cancelar", null);
 
         Dialog ejePopUp = salirApp.create();
+        ejePopUp.show();
+    }
+
+    public void popUpAgregarLista(){
+        AlertDialog.Builder agregarLista = new AlertDialog.Builder(this);
+        agregarLista.setTitle("Nueva Lista");
+        agregarLista.setMessage("Ingrese el nombre de la lista");
+        final EditText ET_Nombre = new EditText(this);
+
+        agregarLista.setView(ET_Nombre);
+
+        agregarLista.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nombreLista = ET_Nombre.getText().toString().trim();
+                if (nombreLista.length() != 0){
+                    Toast.makeText(MainActivity.this, "Nombre: " + nombreLista, Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(MainActivity.this, "Ingrese un nombre", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        agregarLista.setNegativeButton("Cancelar", null);
+
+        Dialog ejePopUp = agregarLista.create();
+        ejePopUp.show();
+    }
+
+    public void popUpAgregarEmisora(){
+        final String[] listaElementos = {"Selección 1", "Selección 2", "Selección 3"};
+
+        AlertDialog.Builder agregarEmisora = new AlertDialog.Builder(this);
+        agregarEmisora.setTitle("Lista");
+        agregarEmisora.setItems(listaElementos, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "Opción elegida: " + listaElementos[which], Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Dialog ejePopUp = agregarEmisora.create();
         ejePopUp.show();
     }
 
