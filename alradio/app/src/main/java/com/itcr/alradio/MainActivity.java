@@ -96,19 +96,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        PopUps popUp = new PopUps();
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
             // Handle the camera action
         } else if (id == R.id.nav_mis_listas) {
-            popUpAgregarLista();
+            popUp.popUpAgregarLista(this);
 
         } else if (id == R.id.nav_reproductor) {
-            popUpAgregarEmisora();
+            popUp.popUpAgregarEmisora(this);
 
         } else if (id == R.id.nav_salir) {
-            //finish();
-            popUpSalir();
+            popUp.popUpSalir(this);
 
         } else if (id == R.id.nav_acerca_de) {
 
@@ -118,97 +118,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    public void popUpSalir(){
-        AlertDialog.Builder salirApp = new AlertDialog.Builder(this);
-        salirApp.setTitle("Salir");
-        salirApp.setMessage("¿Estás seguro que deseas salir?");
-        salirApp.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-
-        salirApp.setNegativeButton("Cancelar", null);
-
-        Dialog ejePopUp = salirApp.create();
-        ejePopUp.show();
-    }
-
-    public void popUpAgregarLista(){
-        AlertDialog.Builder agregarLista = new AlertDialog.Builder(this);
-        agregarLista.setTitle("Nueva Lista");
-        agregarLista.setMessage("Ingrese el nombre de la lista");
-        final EditText ET_Nombre = new EditText(this);
-
-        agregarLista.setView(ET_Nombre);
-
-        agregarLista.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String nombreLista = ET_Nombre.getText().toString().trim();
-                if (nombreLista.length() != 0){
-                    Toast.makeText(MainActivity.this, "Nombre: " + nombreLista, Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(MainActivity.this, "Ingrese un nombre", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        agregarLista.setNegativeButton("Cancelar", null);
-
-        Dialog ejePopUp = agregarLista.create();
-        ejePopUp.show();
-    }
-
-    public void popUpAgregarEmisora() {
-        String[] listaElementos = {"Selección 1", "Selección 2", "Selección 3"};
-        List<String> list = new ArrayList<String>();
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-        list.add("prueba");
-
-        AlertDialog.Builder agregarEmisora = new AlertDialog.Builder(this);
-        View mView = getLayoutInflater().inflate(R.layout.spinner, null);
-        agregarEmisora.setTitle("Lista");
-
-        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        agregarEmisora.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        agregarEmisora.setView(mView);
-        //AlertDialog ejePopUp = agregarEmisora.create();
-        //ejePopUp.show();
-        agregarEmisora.show();
-    }
-
 
 }
