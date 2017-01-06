@@ -15,8 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -149,20 +155,52 @@ public class MainActivity extends AppCompatActivity
         ejePopUp.show();
     }
 
-    public void popUpAgregarEmisora(){
-        final String[] listaElementos = {"Selección 1", "Selección 2", "Selección 3"};
+    public void popUpAgregarEmisora() {
+        String[] listaElementos = {"Selección 1", "Selección 2", "Selección 3"};
+        List<String> list = new ArrayList<String>();
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
+        list.add("prueba");
 
         AlertDialog.Builder agregarEmisora = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.spinner, null);
         agregarEmisora.setTitle("Lista");
-        agregarEmisora.setItems(listaElementos, new DialogInterface.OnClickListener() {
+
+        Spinner spinner = (Spinner) mView.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        agregarEmisora.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "Opción elegida: " + listaElementos[which], Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "OK", Toast.LENGTH_LONG).show();
             }
         });
 
-        Dialog ejePopUp = agregarEmisora.create();
-        ejePopUp.show();
+        agregarEmisora.setView(mView);
+        //AlertDialog ejePopUp = agregarEmisora.create();
+        //ejePopUp.show();
+        agregarEmisora.show();
     }
 
 
