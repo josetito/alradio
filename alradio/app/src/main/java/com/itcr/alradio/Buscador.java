@@ -7,12 +7,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jrarguedas on 07/01/17.
@@ -29,7 +24,7 @@ public class Buscador extends Activity {
 
        // listView=(ListView)findViewById(R.id.listview);
 
-        inflater.inflate(R.menu.buscador, menu);
+        inflater.inflate(R.menu.home_search_bar, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);

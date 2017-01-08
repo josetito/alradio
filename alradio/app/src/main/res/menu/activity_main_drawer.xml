@@ -4,23 +4,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_inicio"
-            android:title="Inicio" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_mis_listas"
-            android:title="Mis Listas" />
+            android:title="@string/menu_my_lists" />
         <item
             android:id="@+id/nav_reproductor"
-            android:title="Reproductor" />
+            android:title="@string/menu_reproducer" />
         <item
             android:id="@+id/nav_salir"
-            android:title="Salir" />
+            android:title="@string/menu_exit" />
     </group>
 
-    <item android:title="información">
+    <item android:title="@string/menu_information">
         <menu>
             <item
                 android:id="@+id/nav_acerca_de"
-                android:title="Acerca de" />
+                android:title="@string/menu_about" />
 
         </menu>
     </item>

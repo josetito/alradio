@@ -1,15 +1,11 @@
 package com.itcr.alradio;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,9 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -30,10 +23,14 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView textView;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private List<String> radios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        radios = new ArrayList<>();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,6 +45,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ///////////////////////////////////////
+        radios.add("Emisora 1");
+        radios.add("Emisora 2");
+        radios.add("Emisora 3");
+        ///////////////////////////////////////
+
+        recyclerView = (RecyclerView) findViewById(R.id.list_container);
+        recyclerView.setAdapter(new RecyclerViewAdapter(radios));
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
     }
 
     @Override
@@ -66,7 +75,7 @@ public class MainActivity extends AppCompatActivity
 
         //Buscador
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.buscador, menu);
+        inflater.inflate(R.menu.home_search_bar, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setQueryHint(getText(R.string.search));
@@ -100,7 +109,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_inicio) {
-            // Handle the camera action
+            int s = radios.size();
+            if (s > 0) {
+                s -= 1;
+                radios.remove(s);
+                recyclerView.removeViewAt(s);
+                recyclerView.getAdapter().notifyItemRemoved(s);
+                recyclerView.getAdapter().notifyItemRangeChanged(s, radios.size());
+            }
         } else if (id == R.id.nav_mis_listas) {
             popUp.popUpAgregarLista(this);
 
@@ -111,7 +127,8 @@ public class MainActivity extends AppCompatActivity
             popUp.popUpSalir(this);
 
         } else if (id == R.id.nav_acerca_de) {
-
+            radios.add("Nueva Emisora");
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -92,7 +92,7 @@ public class PopUps extends AppCompatActivity {
         LayoutInflater mInflater;
         View mView;
         mInflater = LayoutInflater.from(context);
-        mView = mInflater.inflate(R.layout.spinner, null);
+        mView = mInflater.inflate(R.layout.new_my_list_popup_spinner, null);
         //View mView = getLayoutInflater().inflate(R.layout.spinner, null);
         agregarEmisora.setTitle("Lista");
 
