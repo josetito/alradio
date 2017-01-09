@@ -22,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView textView;
+
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private List<String> radios;
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textView = (TextView) findViewById(R.id.textView);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -47,9 +46,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         ///////////////////////////////////////
-        radios.add("Emisora 1");
-        radios.add("Emisora 2");
-        radios.add("Emisora 3");
+        radios.add("rad 1");
+        radios.add("red 2");
+        radios.add("pao 3");
         ///////////////////////////////////////
 
         recyclerView = (RecyclerView) findViewById(R.id.list_container);
@@ -71,31 +70,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-
-        //Buscador
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_search_bar, menu);
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint(getText(R.string.search));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, R.string.submitted, Toast.LENGTH_SHORT).show();
-                searchView.setQuery("", false);
-                searchView.setIconified(true);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                textView.setText(newText);
-                return true;
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
+        Buscador buscador = new Buscador();
+        return buscador.buscador(getMenuInflater(),menu,this,radios,recyclerView,layoutManager);
     }
 
 
