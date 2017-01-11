@@ -22,14 +22,11 @@ public class Buscador extends Activity {
     List<String> todasRadios;
 
 
-    public boolean buscador(MenuInflater inflater, Menu menu, final Context context, List<String> radios, final RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+    public boolean buscador(MenuInflater inflater, Menu menu, final Context context, final List<String> radios, final RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
 
         inflater.inflate(R.menu.home_search_bar, menu);
         todasRadios = radios;
         filtroRadios = new ArrayList<>();
-
-        recyclerView.setAdapter(new RecyclerViewAdapter(filtroRadios));
-        recyclerView.setLayoutManager(layoutManager);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -45,7 +42,12 @@ public class Buscador extends Activity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchItem(newText.toString().toLowerCase(),todasRadios,recyclerView);
+                if  (newText.toString().equals("")){
+                    recyclerView.swapAdapter(new RecyclerViewAdapter(radios), false);
+                }
+                else {
+                    searchItem(newText.toString().toLowerCase(), todasRadios, recyclerView);
+                }
                 return true;
             }
         });
@@ -56,27 +58,24 @@ public class Buscador extends Activity {
     public void searchItem(String textToSearch,List<String> todasRadios,RecyclerView recyclerView){
 
         for(String radio:todasRadios) {
-
-            if (radio.contains(textToSearch)) {
+            if (radio.toLowerCase().contains(textToSearch)) {
                 if (!filtroRadios.contains(radio)) {
                     filtroRadios.add(radio);
-                    recyclerView.getAdapter().notifyDataSetChanged();
                 }
             }
         }
 
         for(int i = 0; i < filtroRadios.size(); i++){
             System.out.println(i);
-            if(!filtroRadios.get(i).contains(textToSearch)){
+            if(!filtroRadios.get(i).toLowerCase().contains(textToSearch)){
                 if (!filtroRadios.isEmpty()){
                     filtroRadios.remove(i);
-                    recyclerView.removeViewAt(i);
-                    recyclerView.getAdapter().notifyItemRemoved(i);
-                    recyclerView.getAdapter().notifyItemRangeChanged(i, filtroRadios.size());
                     i--;
                 }
             }
         }
+
+        recyclerView.swapAdapter(new RecyclerViewAdapter(filtroRadios), false);
 
     }
 
